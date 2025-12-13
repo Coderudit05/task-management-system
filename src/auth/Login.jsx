@@ -12,11 +12,12 @@ export default function Login() {
     e.preventDefault();
 
     const email = e.target.email.value.trim();
+    const password = e.target.password.value.trim();
 
     // ---------------------------
     // 1. ADMIN LOGIN CHECK
     // ---------------------------
-    if (isAdmin(email)) {
+    if (isAdmin(email, password)) {
       const admin = getAdmin(); // fetch full admin object from db
 
       login({
@@ -31,7 +32,7 @@ export default function Login() {
     // ---------------------------
     // 2. EMPLOYEE LOGIN CHECK
     // ---------------------------
-    const validEmployee = isValidUser(email);
+    const validEmployee = isValidUser(email, password);
 
     if (validEmployee) {
       login({
@@ -46,7 +47,7 @@ export default function Login() {
     // ---------------------------
     // 3. INVALID USER
     // ---------------------------
-    alert("Invalid Email!");
+    alert("Invalid Email or Password!");
   };
 
   return (
@@ -78,6 +79,30 @@ export default function Login() {
               type="email"
               id="email"
               name="email"
+              className="
+                bg-gray-900 
+                text-gray-200 
+                border border-gray-600 
+                p-3 
+                rounded-lg 
+                outline-none 
+                focus:border-blue-500 
+                focus:ring-2 
+                focus:ring-blue-400/40
+              "
+              required
+            />
+          </div>
+
+          {/* Password */}
+          <div className="flex flex-col">
+            <label htmlFor="password" className="text-gray-300 mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
               className="
                 bg-gray-900 
                 text-gray-200 
