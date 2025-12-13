@@ -4,7 +4,7 @@ export function getAdmin() {
   return employees.find((user) => user.role === "admin");
 }
 
-export function isAdmin(email, password) {
+export function isAdmin(email) {
   const admin = getAdmin();
-  return admin && admin.email === email && admin.password === password;
+  return admin && admin.email === email;
 }

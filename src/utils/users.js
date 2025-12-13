@@ -1,8 +1,8 @@
 import { employees } from "../data/db"
 
-export const isValidUser = (email, password) => {
+export const isValidUser = (email) => {
 
     return employees.find(
-        (user)=> user.email === email && user.password === password
+        (user)=> user.email === email
     );
 }
