@@ -36,7 +36,6 @@ export function TaskProvider({ children }) {
     // update tasks state
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
-
   // update task function ( for status update) iska matlab hai ke hum kisi task ko update kar sakte hain
 
   const updateTaskStatus = (taskId, newStatus) => {
@@ -47,11 +46,34 @@ export function TaskProvider({ children }) {
     );
   };
 
+  // Edit / Update Task : Ye function ke help se ham kisi task ko edit kar sakte hain
+
+  const updateTask = (taskId, updatedData) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, ...updatedData } : task
+      )
+    );
+  };
+
+  // Delete Task : Ye function ke help se ham kisi task ko delete kar sakte hain
+  const deleteTask = (taskId) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+  };
+
+  // Get Single Task by ID : Ye function ke help se ham kisi specific task ko uske ID ke through fetch kar sakte hain
+  const getTaskById = (taskId) => {
+    return tasks.find((task) => task.id === taskId);
+  };
+
   const value = {
     // ye hame esliye export karna hai taaki hum useContext me use kar sake
     tasks,
     createTask,
     updateTaskStatus,
+    updateTask, // edit task
+    deleteTask,
+    getTaskById,
   };
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;

@@ -1,57 +1,51 @@
 # 📋 Task Management System
 
-A modern, full-featured task management application built with **React.js**, **Context API**, and **Tailwind CSS**. This application provides role-based access for Admins and Employees to efficiently manage and track tasks.
+A modern, full-featured task management application built with React, featuring role-based authentication, real-time status updates, and interactive data visualization.
 
-![Project Banner](https://via.placeholder.com/1200x400/1f2937/3b82f6?text=Task+Management+System)
+![Task Management System](https://img.shields.io/badge/React-18.3.1-blue) ![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4.17-38B2AC) ![Recharts](https://img.shields.io/badge/Recharts-2.15.0-8884d8)
 
-## 🚀 Live Demo
+## 🌟 Features
 
-🔗 **[View Live Application](https://your-app-name.vercel.app)** _(Update after deployment)_
+### 👨‍💼 **Admin Dashboard**
+- ✅ **Task Management**: Create, edit, delete tasks with validation
+- 📊 **Analytics Dashboard**: Real-time statistics with pie & bar charts
+- 🔍 **Advanced Filtering**: Search by title, filter by status/employee
+- 📈 **Performance Tracking**: Employee-wise completion rates
+- 📱 **Responsive Design**: Optimized for all screen sizes
 
----
+### 👨‍💻 **Employee Dashboard**
+- 📋 **Task Overview**: View assigned tasks with status cards
+- 🔄 **Status Management**: Update task status (New → Active → Completed/Failed)
+- 📊 **Visual Statistics**: Task count by status with color-coded cards
+- 🎯 **Task Details**: View task descriptions, due dates, and assigned by info
 
-## ✨ Features
-
-### 👨‍💼 Admin Features
-- ✅ **Create Tasks** - Assign tasks to employees with title, description, due date
-- ✅ **View All Tasks** - Dashboard with all tasks in organized grid layout
-- ✅ **Task Management** - Track task status (New, Active, Completed, Failed)
-- ✅ **Employee Management** - Assign tasks to specific employees
-- ✅ **Real-time Updates** - Instant UI updates using Context API
-
-### 👨‍💻 Employee Features
-- ✅ **View Assigned Tasks** - See only tasks assigned to logged-in employee
-- ✅ **Task Status Overview** - Visual cards showing task counts by status
-- ✅ **Update Task Status** - Change task status (New → Active → Completed/Failed)
-- ✅ **Task Details** - View complete task information including deadlines
-- ✅ **Responsive Dashboard** - Works seamlessly on mobile, tablet, and desktop
-
-### 🔐 Authentication & Security
-- ✅ **Role-based Authentication** - Separate login for Admin and Employees
-- ✅ **Protected Routes** - Unauthorized access prevention
-- ✅ **Session Persistence** - Login state maintained using localStorage
-- ✅ **Secure Logout** - Clean session termination
-
-### 🎨 UI/UX Features
-- ✅ **Responsive Design** - Mobile-first approach with Tailwind CSS
-- ✅ **Dark Theme** - Modern dark mode interface
-- ✅ **Loading States** - Visual feedback for async operations
-- ✅ **Error Handling** - User-friendly error messages
-- ✅ **Smooth Animations** - Enhanced user experience with transitions
+### 🔐 **Authentication System**
+- 🚪 **Role-Based Access**: Admin & Employee roles with protected routes
+- 💾 **Persistent Sessions**: Local storage-based authentication
+- 🔒 **Route Protection**: Unauthorized access prevention
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Tech Stack
 
-### Frontend
-- **React.js 18** - UI library
-- **React Router v6** - Client-side routing
-- **Context API** - State management
-- **Tailwind CSS** - Utility-first CSS framework
-- **Vite** - Build tool and dev server
-
-### Data Management
-- **localStorage** - Client-side data persistence
-- **Context API** - Global state management
+- **Frontend Framework**: React 18.3.1
+- **Styling**: Tailwind CSS 3.4.17
+- **Charts**: Recharts 2.15.0
+- **Routing**: React Router DOM 7.1.1
+- **Build Tool**: Vite 6.0.5
+- **State Management**: Context API
 
 ---
+
+## 📦 Installation
+
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Steps
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/YOUR_USERNAME/task-management-system.git
+cd task-management-system

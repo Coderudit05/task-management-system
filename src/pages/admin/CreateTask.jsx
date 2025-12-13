@@ -51,131 +51,169 @@ export default function CreateTask() {
 
     try {
       createTask(taskData);
-      setMessage({ type: "success", text: "Task created successfully!" });
+      setMessage({ type: "success", text: "✅ Task created successfully!" });
 
+      // Reset form
       setTaskTitle("");
       setDate("");
       setAssignedTo("");
       setDescription("");
 
+      // Clear message after 3s
       setTimeout(() => {
         setMessage({ type: "", text: "" });
       }, 3000);
     } catch (error) {
       setMessage({
         type: "error",
-        text: "Failed to create task. Please try again.",
+        text: "❌ Failed to create task. Please try again.",
       });
     }
   };
+
   return (
-    <div className="mt-5 bg-gray-900 p-6 flex items-center justify-center w-full">
-      {/* ✅ Success/Error Message */}
+    <div className="mt-5 px-4 sm:px-6 py-6">
+      {/* ✅ Success/Error Toast Message */}
       {message.text && (
         <div
-          className={`fixed top-20 right-6 z-50 p-4 rounded-lg shadow-lg ${
+          className={`fixed top-20 right-4 sm:right-6 z-50 p-4 rounded-lg shadow-xl border-2 
+          animate-slide-in max-w-sm ${
             message.type === "success"
-              ? "bg-green-500/90 text-white border border-green-400"
-              : "bg-red-500/90 text-white border border-red-400"
+              ? "bg-green-500/95 text-white border-green-400"
+              : "bg-red-500/95 text-white border-red-400"
           }`}
         >
-          {message.text}
+          <div className="flex items-center gap-2">
+            <span className="text-xl">
+              {message.type === "success" ? "✅" : "⚠️"}
+            </span>
+            <p className="font-medium">{message.text}</p>
+          </div>
         </div>
       )}
 
-      <div className="flex gap-6 w-full">
-        {/* Left Section */}
-        <form
-          id="taskForm" // ✅ Form ID
-          onSubmit={handleSubmit} // ✅ onSubmit handler
-          className="flex-1 bg-gray-800/60 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-gray-700"
-        >
-          <h2 className="text-white text-xl font-semibold mb-4">
-            Create New Task
-          </h2>
+      {/* ✅ RESPONSIVE CONTAINER */}
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-white text-2xl sm:text-3xl font-bold mb-6">
+          Create New Task
+        </h2>
 
-          <div className="space-y-5">
-            {/* Task Title */}
-            <div>
-              <label htmlFor="taskTitle" className="text-gray-300 mb-1 block">
-                Task Title
-              </label>
-              <input
-                type="text"
-                id="taskTitle"
-                value={taskTitle}
-                onChange={(e) => setTaskTitle(e.target.value)}
-                className="w-full p-3 bg-gray-900 text-gray-200 border border-gray-700 rounded-xl 
-                outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter task title"
-              />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* ✅ RESPONSIVE GRID: Single column on mobile, 2 columns on large screens */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* LEFT SECTION - Form Fields */}
+            <div className="bg-gray-800/60 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-gray-700">
+              <h3 className="text-white text-xl font-semibold mb-5">
+                Task Details
+              </h3>
+
+              <div className="space-y-5">
+                {/* Task Title */}
+                <div>
+                  <label
+                    htmlFor="taskTitle"
+                    className="text-gray-300 mb-2 block text-sm font-medium"
+                  >
+                    Task Title <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="taskTitle"
+                    value={taskTitle}
+                    onChange={(e) => setTaskTitle(e.target.value)}
+                    className="w-full p-3 bg-gray-900 text-gray-200 border border-gray-700 rounded-xl 
+                    outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                    placeholder="e.g., Fix login bug"
+                  />
+                </div>
+
+                {/* Date & Assign To - Responsive Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Date */}
+                  <div>
+                    <label
+                      htmlFor="date"
+                      className="text-gray-300 mb-2 block text-sm font-medium"
+                    >
+                      Due Date <span className="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      id="date"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      min={new Date().toISOString().split("T")[0]} // ✅ Prevent past dates
+                      className="w-full p-3 bg-gray-900 text-gray-200 border border-gray-700 rounded-xl 
+                      outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                    />
+                  </div>
+
+                  {/* Assign To */}
+                  <div>
+                    <label
+                      htmlFor="assignTo"
+                      className="text-gray-300 mb-2 block text-sm font-medium"
+                    >
+                      Assign To <span className="text-red-400">*</span>
+                    </label>
+                    <select
+                      id="assignTo"
+                      value={assignedTo}
+                      onChange={(e) => setAssignedTo(e.target.value)}
+                      className="w-full p-3 bg-gray-900 text-gray-200 border border-gray-700 rounded-xl 
+                      outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                    >
+                      <option value="">Select Employee</option>
+                      {filteredEmployees.map((emp) => (
+                        <option key={emp.id} value={emp.id}>
+                          {emp.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Date */}
-            <div>
-              <label htmlFor="date" className="text-gray-300 mb-1 block">
-                Date
-              </label>
-              <input
-                type="date"
-                id="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className="w-full p-3 bg-gray-900 text-gray-200 border border-gray-700 rounded-xl 
-                outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
+            {/* RIGHT SECTION - Description */}
+            <div className="bg-gray-800/60 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-gray-700 flex flex-col">
+              <h3 className="text-white text-xl font-semibold mb-5">
+                Task Description
+              </h3>
 
-            {/* Assign To */}
-            <div>
-              <label htmlFor="assignTo" className="text-gray-300 mb-1 block">
-                Assign To
-              </label>
-              <select
-                id="assignTo"
-                value={assignedTo}
-                onChange={(e) => setAssignedTo(e.target.value)}
-                className="w-full p-3 bg-gray-900 text-gray-200 border border-gray-700 rounded-xl 
-                outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">Select Employee</option>
-                {filteredEmployees.map((emp) => (
-                  <option key={emp.id} value={emp.id}>
-                    Employee Id : {emp.id} Employee name : {emp.name}
-                  </option>
-                ))}
-              </select>
+              <div className="flex-1 flex flex-col">
+                <label
+                  htmlFor="description"
+                  className="text-gray-300 mb-2 block text-sm font-medium"
+                >
+                  Description <span className="text-red-400">*</span>
+                </label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={7}
+                  className="flex-1 w-full p-3 bg-gray-900 text-gray-200 border border-gray-700 rounded-xl 
+                  outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none transition"
+                  placeholder="Write detailed task description here...&#10;&#10;Example:&#10;- Fix the authentication bug on login page&#10;- Update user profile validation&#10;- Add error handling"
+                ></textarea>
+              </div>
             </div>
           </div>
-        </form>
 
-        {/* Right Section */}
-        <div className="flex-1 bg-gray-800/60 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-gray-700 flex flex-col">
-          <h2 className="text-white text-xl font-semibold mb-4">
-            Task Description
-          </h2>
-
-          <textarea
-            rows={7}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            form="taskForm" // ✅ Form se link
-            className="w-full p-3 bg-gray-900 text-gray-200 border border-gray-700 rounded-xl 
-            outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
-            placeholder="Write task details here..."
-          ></textarea>
-
-          <div className="flex justify-end pt-4">
+          {/* ✅ SUBMIT BUTTON - Full width on mobile, auto on desktop */}
+          <div className="flex justify-end">
             <button
-              type="submit" // ✅ Type submit
-              form="taskForm" // ✅ Form se link
-              className="bg-blue-600 text-white px-6 py-3 rounded-xl text-sm font-medium 
-              hover:bg-blue-700 transition hover:shadow-blue-500/20 hover:shadow-lg"
+              type="submit"
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-700 
+              hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-xl 
+              text-sm font-semibold transition-all duration-200 
+              hover:shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02] active:scale-[0.98]"
             >
-              Create Task
+              ✨ Create Task
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
