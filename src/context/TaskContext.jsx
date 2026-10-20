@@ -8,21 +8,34 @@ const TaskContext = createContext();
 
 export function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
+  const [tasksLoaded, setTasksLoaded] = useState(false);
 
   // firstly load tasks from local storage when app loads
   useEffect(() => {
     // fetch tasks from local storage on initial load
-    const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    setTasks(savedTasks);
+    try {
+      const savedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+      setTasks(Array.isArray(savedTasks) ? savedTasks : []);
+    } catch (error) {
+      console.error("Unable to read saved tasks:", error);
+      setTasks([]);
+    } finally {
+      setTasksLoaded(true);
+    }
   }, []);
 
   // now whenever tasks change, update local storage
 
   useEffect(() => {
-    if (tasks.length > 0) {
+    if (!tasksLoaded) return;
+
+    try {
+      // Persist empty arrays too, so deleting the final task stays deleted.
       localStorage.setItem("tasks", JSON.stringify(tasks));
+    } catch (error) {
+      console.error("Unable to save tasks:", error);
     }
-  }, [tasks]);
+  }, [tasks, tasksLoaded]);
 
   // function to add new task
   const createTask = (taskData) => {
